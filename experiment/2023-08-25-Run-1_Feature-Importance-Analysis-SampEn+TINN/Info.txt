@@ -1,0 +1,54 @@
+Automated CHF Detecion Using Optimized XGBoost on Short-term HRV Signals
+
+Data acquisition
+- NSRDB, NSR2DB, CHFDB, CHF2DB, 
+  - Justifikasi: Paper Isler, Lebih banyak data
+- 5 minutes segment, first 2 hours, 50% overlap
+  - Justifikasi: Gak dikasih metadata kapan tidur dan bangun, jadi asumsi 2 jam pertama pasien mulai record data itu masih bangun
+
+Data preprocessing
+- ectopic beat -> interpolation
+- outlier (300 <= RRI <= 2000) -> interpolation
+
+Data filter
+- ectopic beat threshold: >10% -> drop
+- age unknown -> drop
+- gender unknown -> drop
+
+Exploratory Data Analysis
+- Class distribution
+- Usual statistics
+- Feature Correlation (Pearson)
+
+Clinical features
+- Age
+- Gender
+
+HRV features
+- MEAN_NNI, SDNN, SDSD, NNI_50, pNNI_50, NNI_20, pNNI_20, RMSSD, MEDIAN_NNI, RANGE_NNI, CVSD, CVNNI, MEAN_HR, MAX_HR, MIN_HR, STD_HR
+- LF, HF, LF/HF, LFNU, HFNU, TOTAL_POWER, VLF
+- SD1, SD2, SD1/SD2
+- CSI, CSV, Modified_CSI
+- Triangular_Index
+- SampEn
+
+Model
+- XGBoost
+- GridSearch + StratifiedKFold
+- Objective GridSearch: Accuracy, Sensitivity, Specificity
+
+Evaluation Metrics
+- Accuracy
+- Sensitivity
+- Specificity
+
+Second Fit
+- Feature Selection from First Fit: Top-5, Top-10, Top-15
+
+Third Fit
+- Feature Reduction from Analysis: Age, LF/HF, NNI_20
+
+Analysis
+- Model performance
+- Confusion matrix
+- Feature ranking
